@@ -3,13 +3,16 @@ CREATE DATABASE employee_tracker_db;
 
 USE employee_tracker_db;
 
-CREATE TABLE department(
+CREATE TABLE employees(
   id INT NOT NULL AUTO_INCREMENT,
-  name VARCHAR(100) NOT NULL,
+  first_name VARCHAR(30) NOT NULL,
+  last_name VARCHAR(30) NOT NULL,
+  role_id INT NOT NULL,
+  manager_id INT,
   PRIMARY KEY (id)
 );
 
-CREATE TABLE role(
+CREATE TABLE roles(
   id INT NOT NULL AUTO_INCREMENT,
   title VARCHAR(100) NOT NULL,
   salary DECIMAL(8,2) NOT NULL,
@@ -17,11 +20,8 @@ CREATE TABLE role(
   PRIMARY KEY (id)
 );
 
-CREATE TABLE employee(
+CREATE TABLE departments(
   id INT NOT NULL AUTO_INCREMENT,
-  first_name VARCHAR(30) NOT NULL,
-  last_name VARCHAR(30) NOT NULL,
-  role_id INT NOT NULL,
-  manager_id INT,
+  name VARCHAR(100) NOT NULL,
   PRIMARY KEY (id)
 );
