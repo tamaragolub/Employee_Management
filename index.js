@@ -77,7 +77,7 @@ function addDepartment() {
           name: answer.name
         },
         function(err) {
-          console.log("The department has been updated successfully!");
+          console.log("The department has been added successfully!");
           start();
         }
       );
@@ -130,7 +130,7 @@ function addRole() {
           },
 
           function(err) {
-            console.log("The role has been updated successfully!");
+            console.log("The role has been added successfully!");
             start();
           }
         );
@@ -138,7 +138,53 @@ function addRole() {
   });
 }
 
-function addEmployee() {}
+function addEmployee() {
+    connection.query("SELECT * FROM roles", function(err, results) {
+        if (err) throw err;
+    
+        inquirer
+          .prompt([
+            {
+              name: "first_name",
+              type: "input",
+              message: "What is the first name?"
+            },
+            {
+                name: "last_name",
+                type: "input",
+                message: "What is the last name?"
+            },
+            {
+              name: "role",
+              type: "rawlist",
+              message: "What is the role?",
+              choices: function() {
+                  var roleList = [];
+                  for (var i = 0; i < results.length; i++) {
+                      roleList.push({
+                          name: results[i].title, value: results[i].id
+                      })
+                  } return roleList;
+              }
+            }
+          ])
+          .then(function(answer) {
+            connection.query(
+              "INSERT INTO employees SET ?",
+              {
+                first_name: answer.first_name,
+                last_name: answer.last_name,
+                role_id: answer.role
+              },
+    
+              function(err) {
+                console.log("The employee has been added successfully!");
+                start();
+              }
+            );
+          });
+      });
+}
 function viewEmployees() {}
 function viewRoles() {}
 function viewDepartments() {}
