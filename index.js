@@ -229,54 +229,50 @@ function addManager(employee) {
         }
       ])
       .then(function(answer) {
+        employee.manager_id = answer.manager;
 
-        employee.manager_id = answer.manager
-
-        connection.query(
-            "INSERT INTO employees SET ?",
-            employee,
-            function(err) {
-              console.log("The employee manager has been updated successfully!");
-              start();
-            }
-          );
+        connection.query("INSERT INTO employees SET ?", employee, function(
+          err
+        ) {
+          console.log("The employee manager has been updated successfully!");
+          start();
+        });
       });
   });
 }
 
 function viewEmployees() {
-   connection.query(
-       "SELECT * FROM employees",
+  connection.query(
+    "SELECT * FROM employees",
 
-       function(err, results){
+    function(err, results) {
+      console.table(results);
 
-        console.table (results)
-
-      
-       }
-   )
+      start();
+    }
+  );
 }
+
 function viewRoles() {
-    connection.query(
-        "SELECT * FROM roles",
- 
-        function(err, results){
- 
-         console.table (results)
- 
-       
-        }
-    )
+  connection.query(
+    "SELECT * FROM roles",
+
+    function(err, results) {
+      console.table(results);
+
+      start();
+    }
+    );
 }
+
 function viewDepartments() {
-    connection.query(
-        "SELECT * FROM departments",
- 
-        function(err, results){
- 
-         console.table (results)
- 
-         start();
-        }
-    )
+  connection.query(
+    "SELECT * FROM departments",
+
+    function(err, results) {
+      console.table(results);
+
+      start();
+    }
+  );
 }
